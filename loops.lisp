@@ -60,4 +60,15 @@
 (findip #(1 2 3 4 3 2 1) (lambda (x) (> x 2)))
 
 
+(loop for i from 0 to 5
+     collect i)
 
+
+(loop for i from 0 to 5
+   for j from 0 to 5
+	  collect (list i j)) ; NOT a nested loop
+
+; this works - from https://stackoverflow.com/questions/40812080/nested-loops-using-loop-macro-in-common-lisp
+(loop for x from 1 to 5
+      append (loop for y from 1 to 5
+                   collect (list x y)))
