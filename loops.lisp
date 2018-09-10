@@ -51,7 +51,7 @@
 
 (findi #(1 2 3 4 3 2 1) 2)
 
-; find all indices of lst with pred = true
+; find all indices of lst with pred list-item = true
 (defun findip (lst pred)
   (loop for i from 0 to (1- (length lst))
     when (funcall pred (elt lst i)) collect i))
@@ -59,16 +59,24 @@
 (findip #(1 2 3 4 3 2 1) (lambda (x) (= x 2)))
 (findip #(1 2 3 4 3 2 1) (lambda (x) (> x 2)))
 
+; find indices and values of lst with pred list-item = true
+(defun findivp (lst pred)
+  (loop
+     for item in lst ; iterate over the list
+     for i from 0    ; and in parallel, create an index
+        when (funcall pred item)
+           collect (list i item))) ; when(pred item = true) , collect i item in a list
 
+(findivp '(1 2 3 4 3 2 1) (lambda (x) (> x 2)))
+       
 (loop for i from 0 to 5
      collect i)
-
 
 (loop for i from 0 to 5
    for j from 0 to 5
 	  collect (list i j)) ; NOT a nested loop
 
-; this works - from https://stackoverflow.com/questions/40812080/nested-loops-using-loop-macro-in-common-lisp
+; NESTED LOOP - from https://stackoverflow.com/questions/40812080/nested-loops-using-loop-macro-in-common-lisp
 (loop for x from 1 to 5
       append (loop for y from 1 to 5
                    collect (list x y)))
